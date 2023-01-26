@@ -44,6 +44,15 @@ exports.COLOR_THEMES = {
       'gradient-4': '#FFCC81',
     },
   },
+  rose_pine: {
+    colors: {
+      primary: '#c4a7e7',
+      'gradient-1': '#9ccfd8',
+      'gradient-2': '#eb6f92',
+      'gradient-3': '#eb6f92',
+      'gradient-4': '#9ccfd8',
+    },
+  },
 };
 
 exports.FONT_THEMES = {

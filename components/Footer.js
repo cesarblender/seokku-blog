@@ -5,7 +5,6 @@ const sunIcon = (
     height="24"
     fill="none"
     viewBox="0 0 25 24"
-    className="dark:opacity-50"
   >
     <g
       stroke="#fff"
@@ -41,49 +40,18 @@ const moonIcon = (
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      className="stroke-current text-gray-400 dark:text-white"
+      className="stroke-current text-gray-400"
       d="M19.5 10.79A9 9 0 119.71 1a7 7 0 009.79 9.79v0z"
     ></path>
   </svg>
 );
 
-const ThemeSwitcher = () => {
-  return (
-    <div className="flex mt-6 bg-white justify-center dark:bg-gray-900 rounded-3xl p-1">
-      <button
-        type="button"
-        aria-label="Use Dark Mode"
-        onClick={() => {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        }}
-        className="flex items-center h-full pr-2 dark:bg-primary rounded-3xl flex justify-center align-center p-2 w-24 h-10 transition"
-      >
-        {moonIcon}
-      </button>
-
-      <button
-        type="button"
-        aria-label="Use Light Mode"
-        onClick={() => {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        }}
-        className="flex items-center h-full pr-2 bg-primary dark:bg-transparent rounded-3xl flex justify-center align-center p-2 w-24 h-10 transition"
-      >
-        {sunIcon}
-      </button>
-    </div>
-  );
-};
-
 export default function Footer({ copyrightText }) {
   return (
     <footer className="py-16 flex flex-col items-center">
-      <p className="dark:text-white uppercase mb-3 font-bold opacity-60">
+      <p className="uppercase mb-3 font-bold opacity-60">
         {copyrightText}
       </p>
-      <ThemeSwitcher />
     </footer>
   );
 }
