@@ -1,47 +1,160 @@
 import Link from 'next/link';
 import { getPosts } from '../utils/mdx-utils';
-
 import Footer from '../components/Footer';
-import Header from '../components/Header';
 import Layout from '../components/Layout';
-import ArrowIcon from '../components/ArrowIcon';
 import { getGlobalData } from '../utils/global-data';
 import SEO from '../components/SEO';
+import {
+  Container,
+  Grid,
+  Typography,
+  Avatar,
+  useTheme,
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Stack,
+} from '@mui/material';
+import { keyframes } from '@emotion/react';
+
+function Splash() {
+  const theme = useTheme();
+
+  return (
+    <Container>
+      <Grid container wrap="wrap" sx={{ height: '90vh' }}>
+        <Grid
+          item
+          lg={6}
+          xs={12}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: { lg: undefined, xs: 'center' },
+            flexDirection: 'column',
+          }}
+        >
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{
+              textShadow: `3px 3px 15px ${theme.palette.primary.main}`,
+            }}
+          >
+            seokku
+          </Typography>
+          <Typography
+            variant="h5"
+            component="h2"
+            sx={{
+              textShadow: `3px 3px 15px ${theme.palette.secondary.main}`,
+            }}
+          >
+            web developer
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          lg={6}
+          xs={12}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar
+            sx={{
+              width: 130,
+              height: 130,
+              boxShadow: `
+            20px 20px 50px ${theme.palette.primary.main},
+            -20px -20px 50px ${theme.palette.secondary.main},
+            0px 0px 4px 5px white`,
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: 'black',
+                width: '100%',
+                height: '100%',
+                backgroundImage: 'url(/sans.jpg)',
+                backgroundSize: 'cover',
+              }}
+            />
+          </Avatar>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+}
 
 export default function Index({ posts, globalData }) {
+  const theme = useTheme();
+
   return (
     <Layout>
       <SEO title={globalData.name} description={globalData.blogTitle} />
-      <Header name={globalData.name} />
+      <Splash />
       <main className="w-full">
-        <h1 className="text-3xl lg:text-5xl text-center mb-12">
-          {globalData.blogTitle}
-        </h1>
-        <ul className="w-full">
-          {posts.map((post) => (
-            <li
-              key={post.filePath}
-              className="md:first:rounded-t-lg md:last:rounded-b-lg backdrop-blur-lg bg-white dark:bg-black dark:bg-opacity-30 bg-opacity-10 hover:bg-opacity-20 dark:hover:bg-opacity-50 transition border border-gray-800 dark:border-white border-opacity-10 dark:border-opacity-10 border-b-0 last:border-b hover:border-b hovered-sibling:border-t-0"
-            >
-              <Link
-                as={`/posts/${post.filePath.replace(/\.mdx?$/, '')}`}
-                href={`/posts/[slug]`} className="py-6 lg:py-10 px-6 lg:px-16 block focus:outline-none focus:ring-4">
-                  {post.data.date && (
-                    <p className="uppercase mb-3 font-bold opacity-60">
-                      {post.data.date}
-                    </p>
-                  )}
-                  <h2 className="text-2xl md:text-3xl">{post.data.title}</h2>
-                  {post.data.description && (
-                    <p className="mt-3 text-lg opacity-60">
-                      {post.data.description}
-                    </p>
-                  )}
-                  <ArrowIcon className="mt-4" />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <Typography
+          variant="h3"
+          component="h2"
+          align="center"
+          sx={{ fontWeight: '500' }}
+        >
+          seokku blog
+        </Typography>
+        <Container>
+          <Stack gap={2} direction="row" flexWrap="wrap" sx={{ marginTop: 4 }} justifyContent="center">
+            {posts.map((post) => (
+              <Card
+                key={post.filePath}
+                sx={{
+                  maxWidth: 350,
+                  transition: 'box-shadow ease 0.4s',
+                  '&:hover': {
+                    boxShadow: `
+                  20px 20px 50px ${theme.palette.primary.main},
+                  -20px -20px 50px ${theme.palette.secondary.main},
+                  0px 0px 4px 5px white`,
+                  },
+                }}
+              >
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {post.data.date}
+                  </Typography>
+                  <Typography variant="h5" component="div">
+                    {post.data.title}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {post.data.category}
+                  </Typography>
+                  <Typography variant="body2">
+                    {post.data.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    LinkComponent={Link}
+                    href={`/posts/${post.filePath.replace(/\.mdx?$/, '')}`}
+                  >
+                    Learn More
+                  </Button>
+                </CardActions>
+              </Card>
+            ))}
+          </Stack>
+        </Container>
       </main>
       <Footer copyrightText={globalData.footerText} />
     </Layout>
